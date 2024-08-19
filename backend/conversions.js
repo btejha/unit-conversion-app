@@ -65,7 +65,6 @@ const conversions = {
 };
 
 const convert = (value, fromUnit, toUnit) => {
-    console.log("value, fromUnit, toUnit ******", value, fromUnit, toUnit);
 
     // Ensure fromUnit and toUnit are in the correct case and format
     const toFunctionName = `to${toUnit.charAt(0).toUpperCase() + toUnit.slice(1)}`;

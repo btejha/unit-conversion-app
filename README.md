@@ -46,3 +46,14 @@ You can learn more in the [Vue 3 documentation](https://vuejs.org/guide/introduc
 To learn about Node.js, check out the [Node.js documentation](https://nodejs.org/en/docs/).
 
 For testing, refer to the [Jest documentation](https://jestjs.io/docs/en/getting-started).
+
+
+### To improve the "Unit Conversion" project, here are five or more development tasks you could undertake next:
+1. Improve the User Interface (UI)
+2. Expand Conversion Capabilities
+3. Implement Detailed Error Handling
+4. Enhance CI/CD Pipeline
+5. Add Authentication and Authorization
+6. Integrate a Database for Persistence
+7. Implement a Feedback System
+8. Documentation of the project
