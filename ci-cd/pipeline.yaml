@@ -1,0 +1,41 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run build
+artifacts:
+  files:
+    - '**/*'
+cache:
+  paths:
+    - 'node_modules/**/*'
+deploy:
+  commands:
+    - |
+      const AWS = require('aws-sdk');
+      const codeDeploy = new AWS.CodeDeploy();
+      const params = {
+        applicationName: 'UnitConversionApp',       
+        deploymentGroupName: 'UnitConversionDeploymentGroup',
+        revision: {
+          revisionType: 'S3',
+          s3Location: {
+            bucket: 'unit-conversion-deployments',
+            key: 'unit-conversion-app.zip',
+            bundleType: 'zip'
+          }
+        }
+      };
+      codeDeploy.createDeployment(params, (err, data) => {
+        if (err) {
+          console.log('Error:', err);
+        } else {
+          console.log('Deployment created successfully:', data);
+        }
+      });
