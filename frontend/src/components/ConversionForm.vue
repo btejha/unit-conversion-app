@@ -7,19 +7,34 @@
       </div>
       <div class="form-group">
         <label for="fromUnit">From Unit:</label>
-        <select v-model="fromUnit" id="fromUnit">
-          <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
-        </select>
+        <Multiselect
+            v-model="fromUnit"
+            :options="units"
+            placeholder="Select a unit"
+            label="fromUnit"
+            id="fromUnit"
+            :searchable="true"
+            class="multiselect"
+        />
+        <span v-if="errors.fromUnit" class="error">{{ errors.fromUnit }}</span>
       </div>
       <div class="form-group">
         <label for="toUnit">To Unit:</label>
-        <select v-model="toUnit" id="toUnit">
-          <option v-for="unit in units" :key="unit" :value="unit">{{ unit }}</option>
-        </select>
+        <Multiselect
+            v-model="toUnit"
+            :options="units"
+            placeholder="Select a unit"
+            label="toUnit"
+            id="toUnit"
+            :searchable="true"
+            class="multiselect"
+        />
+        <span v-if="errors.toUnit" class="error">{{ errors.toUnit }}</span>
       </div>
       <div class="form-group">
         <label for="studentResponse">Student Response:</label>
         <input v-model="studentResponse" id="studentResponse" required/>
+        <span v-if="errors.studentResponse" class="error">{{ errors.studentResponse }}</span>
       </div>
       <button type="submit">Submit</button>
     </form>
@@ -27,19 +42,10 @@
     <table v-if="results.length">
       <thead>
       <tr>
-        <th>Input
-          Numerical
-          Value
-        </th>
-        <th>Input Unit of
-          Measure
-        </th>
-        <th>Target Unit of
-          Measure
-        </th>
-        <th>Student
-          Response
-        </th>
+        <th>Input Numerical Value</th>
+        <th>Input Unit of Measure</th>
+        <th>Target Unit of Measure</th>
+        <th>Student Response</th>
         <th>Correct Answer</th>
         <th>Output</th>
       </tr>
@@ -67,22 +73,53 @@
 </template>
 
 <script>
+import Multiselect from '@vueform/multiselect/src/Multiselect.vue';
+
 import axios from 'axios';
+import '@vueform/multiselect/themes/default.css';
 
 export default {
+  components: {
+    Multiselect,
+  },
   data() {
     return {
-      inputValue: 0,
-      fromUnit: 'celsius',
-      toUnit: 'fahrenheit',
-      studentResponse: 0,
+      inputValue: '',
+      fromUnit: 'null',
+      toUnit: 'null',
+      studentResponse: '',
       result: null,
       results: [],
-      units: ['kelvin', 'celsius', 'fahrenheit', 'rankine', 'liters', 'tablespoons', 'cubic-inches', 'cups', 'cubic-feet', 'gallons']
+      units: ['kelvin', 'celsius', 'fahrenheit', 'rankine', 'liters', 'tablespoons', 'cubic-inches', 'cups', 'cubic-feet', 'gallons'],
+      errors: {}
     };
   },
   methods: {
+    validateForm() {
+      this.errors = {};
+      let isValid = true;
+      if (!this.inputValue) {
+        this.errors.inputValue = 'Input Value is required.';
+        isValid = false;
+      }
+      if (!this.fromUnit) {
+        this.errors.fromUnit = 'From Unit is required.';
+        isValid = false;
+      }
+      if (!this.toUnit) {
+        this.errors.toUnit = 'To Unit is required.';
+        isValid = false;
+      }
+      if (!this.studentResponse) {
+        this.errors.studentResponse = 'Student Response is required.';
+        isValid = false;
+      }
+      return isValid;
+    },
     async submitForm() {
+      if (!this.validateForm()) {
+        return;
+      }
       try {
         const response = await axios.post('http://localhost:5000/api/grade', {
           inputValue: parseFloat(this.inputValue),
@@ -171,5 +208,17 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #ddd;
+}
+
+.multiselect {
+  width: 100%;
+  max-width: 400px; /* Adjust this value as needed */
+  border: 1px solid black;
+}
+
+.error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
 }
 </style>

@@ -1,16 +1,23 @@
 {
   "name": "unit-conversion-app-v",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "build": "vue-cli-service build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node backend/app.js"
+    "serve": "vue-cli-service serve",
+    "start": "node backend/app.js",
+    "lint": "vue-cli-service lint",
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "vue",
+    "unit-conversion",
+    "frontend",
+    "backend",
+    "fullstack"
+  ],
+  "author": "Tejha Bollu",
   "license": "ISC",
-  "description": "",
+  "description": "A unit conversion application built with Vue.js and Node.js.",
   "dependencies": {
     "axios": "^1.7.4",
     "body-parser": "^1.20.2",
@@ -21,9 +28,12 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "^2.4.6",
     "jest": "^29.7.0",
     "supertest": "^7.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "eslint": "^8.29.0",
+    "eslint-plugin-vue": "^9.5.1"
   }
 }

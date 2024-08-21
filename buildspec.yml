@@ -3,9 +3,11 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 22  # Updated to Node.js version 22
     commands:
       - echo Installing dependencies...
+      - npm --version  # Debugging: Ensure it shows npm 10.8.1
+      - node --version  # Debugging: Ensure it shows Node.js 22.4
       - npm install
   pre_build:
     commands:

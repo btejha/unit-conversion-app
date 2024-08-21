@@ -7,7 +7,7 @@ module.exports = {
             // Jest-specific configuration
             testMatch: ['**/tests/unit/**/*.spec.js'], // Custom test match pattern
             collectCoverage: true, // Enable coverage collection
-            collectCoverageFrom: ['src/**/*.{js,vue}', '!src/main.js'], // Define files to collect coverage from
+            collectCoverageFrom: ['src/**/*.{js,vue}'], // Define files to collect coverage from
             coverageReporters: ['html', 'text-summary'], // Define the coverage reporters
             moduleFileExtensions: ['js', 'json', 'vue'], // Extensions Jest should recognize
             transform: {
